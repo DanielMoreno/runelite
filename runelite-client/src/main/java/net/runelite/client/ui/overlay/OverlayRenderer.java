@@ -50,6 +50,8 @@ import net.runelite.api.ChatMessageType;
 import net.runelite.api.Client;
 import net.runelite.api.GameState;
 import net.runelite.api.KeyCode;
+import net.runelite.api.MenuAction;
+import net.runelite.api.MenuEntry;
 import net.runelite.api.events.BeforeRender;
 import net.runelite.api.events.FocusChanged;
 import net.runelite.api.events.MenuOpened;
@@ -202,6 +204,18 @@ public class OverlayRenderer extends MouseAdapter
 
 		List<OverlayMenuEntry> menuEntries = overlay.getMenuEntries();
 		if (menuEntries.isEmpty())
+		{
+			return;
+		}
+
+		MenuEntry[] entries = client.getMenu().getMenuEntries();
+		if (entries.length == 0)
+		{
+			return;
+		}
+
+		MenuEntry topEntry = entries[entries.length - 1];
+		if (topEntry.getType() == MenuAction.CANCEL)
 		{
 			return;
 		}
